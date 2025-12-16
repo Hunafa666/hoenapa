@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PGSD Bangga — Poster Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand__logo">PG</div>
+      <div class="brand__text">
+        <div class="brand__title">Poster Generator</div>
+        <div class="brand__sub">Upload foto → input juara → download HD (bisa dipakai siapa pun lewat link)</div>
+      </div>
+    </div>
+
+    <div class="topbar__actions">
+      <button id="btnDownload" class="btn btn--primary">Download PNG</button>
+      <button id="btnResetAll" class="btn btn--ghost">Reset</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <div class="card">
+        <h2>1) Upload Foto Mentah</h2>
+        <p class="muted">
+          Foto otomatis “cover” ke kotak tengah (rapi, tidak gepeng).
+          Kamu bisa drag foto di preview untuk menggeser posisi.
+        </p>
+
+        <div class="uploader">
+          <input id="photoInput" type="file" accept="image/*" />
+          <div class="uploader__hint">Format: JPG/PNG • Disarankan: foto resolusi tinggi</div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Zoom Foto</label>
+            <input id="zoom" type="range" min="0.8" max="2.5" step="0.01" value="1.15" />
+            <div class="mini muted"><span id="zoomVal">1.15x</span></div>
+          </div>
+
+          <div class="field">
+            <label>Posisi Foto</label>
+            <div class="row">
+              <button id="btnCenter" class="btn btn--small">Tengah</button>
+              <button id="btnResetPos" class="btn btn--small btn--ghost">Reset Posisi</button>
+            </div>
+            <div class="mini muted">Tip: drag foto langsung di preview.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2) Input Juara / Prestasi</h2>
+        <p class="muted">
+          Teks muncul <b>di bawah “PGSD BANGGA”</b> (kiri bawah, di bawah kotak foto). Support multi-line.
+        </p>
+
+        <div class="field">
+          <label>Juara / Prestasi</label>
+          <textarea id="achievement" rows="3" placeholder="Contoh:
+JUARA 1 LOMBA POSTER
+TINGKAT NASIONAL"></textarea>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Ukuran Font Prestasi</label>
+            <input id="fontSize" type="range" min="24" max="90" step="1" value="56" />
+            <div class="mini muted">
+              <span id="fontSizeVal">56px</span>
+              <span class="sep">•</span>
+              <label class="check inline">
+                <input id="autoFit" type="checkbox" checked />
+                <span>Auto-fit (menyesuaikan box)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Ukuran Output</label>
+            <select id="scale">
+              <option value="1">Normal (1x)</option>
+              <option value="2" selected>HD (2x)</option>
+            </select>
+            <div class="mini muted">HD 2x = lebih tajam saat dipost.</div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Nama File</label>
+            <input id="filename" type="text" placeholder="pgsd-bangga" value="pgsd-bangga" />
+            <div class="mini muted">Akan jadi: nama-file.png</div>
+          </div>
+
+          <div class="field">
+            <label>Preview Bantuan</label>
+            <label class="check">
+              <input id="showGuides" type="checkbox" />
+              <span>Tampilkan garis bantu (preview)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card--note">
+        <h3>Alur kerja</h3>
+        <ol class="steps">
+          <li>Upload foto mentah</li>
+          <li>Input juara/prestasi + atur ukuran font</li>
+          <li>Cek preview (drag/zoom kalau perlu)</li>
+          <li>Download PNG HD → posting</li>
+        </ol>
+
+        <div class="mini muted">
+          Pastikan file template kamu bernama <b>template.png</b> di folder yang sama.
+        </div>
+      </div>
+    </section>
+
+    <section class="preview">
+      <div class="preview__card">
+        <div class="preview__top">
+          <div class="badge">LIVE PREVIEW</div>
+          <div class="muted mini" id="infoRes">—</div>
+        </div>
+
+        <div class="canvasWrap">
+          <canvas id="canvas" width="800" height="1000"></canvas>
+          <div class="canvasHelp muted mini">
+            Drag foto untuk geser • Scroll (mouse wheel) untuk zoom
+          </div>
+        </div>
+
+        <div class="preview__actions">
+          <button id="btnDownload2" class="btn btn--primary">Download PNG</button>
+          <button id="btnLoadTemplate" class="btn btn--ghost">Ganti Template</button>
+          <input id="templateInput" type="file" accept="image/*" hidden />
+        </div>
+
+        <div class="mini muted note">
+          Untuk dipakai ramai-ramai lewat link: deploy web ini (GitHub Pages/Netlify/Vercel).
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> PGSD Bangga • Generator</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
